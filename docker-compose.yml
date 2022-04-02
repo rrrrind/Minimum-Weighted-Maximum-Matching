@@ -1,0 +1,22 @@
+version: "3.7"
+# コンテナの集まりの名前を定義
+services:
+    # 1つのコンテナの名前を定義
+    # これ+プロジェクト(ディレクトリ)名がimage名となる
+    mwmm:
+        # ./にあるDockerfileを使う と言う意味
+        build: .
+        # image名をここで編集する(変える)
+        image: rrrrind/mwmm
+        # container名
+        container_name: "mwmm"
+        # ポート番号の指定(ホスト:コンテナ)
+        ports:
+          - 9990:9990
+        # コンテナからローカルへバインドマウントする
+        volumes: 
+          - type: bind
+            source: ./workspace/
+            target: /home/workspace/
+        # コンテナを立ち上げた時に実行されるコマンド
+        command: jupyter lab --ip=0.0.0.0 --port=9990 --allow-root --no-browser --notebook-dir="/home/workspace/"
